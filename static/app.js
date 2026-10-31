@@ -7,6 +7,27 @@ const amountInput = document.querySelector('#amount');
 const tagline = document.querySelector('#tagline');
 const balanceCard = document.querySelector('#balance-card');
 const formTitle = document.querySelector('#form-title');
+const historyBody = document.querySelector('#history-body');
+const historyEmpty = document.querySelector('#history-empty');
+
+function renderHistory() {
+  historyBody.replaceChildren();
+  transactions.forEach((transaction, index) => {
+    const row = document.createElement('tr');
+    const cells = [
+      index + 1,
+      transaction.type === 'income' ? 'Доход' : 'Расход',
+      `₽ ${Number(transaction.amount).toLocaleString('ru-RU')}`,
+    ];
+    for (const value of cells) {
+      const cell = document.createElement('td');
+      cell.textContent = value;
+      row.append(cell);
+    }
+    historyBody.append(row);
+  });
+  historyEmpty.hidden = transactions.length > 0;
+}
 
 function applyVersion(version) {
   const isV2 = version === '2';
@@ -55,4 +76,7 @@ form.addEventListener('submit', async (event) => {
   }
   amountInput.value = '';
   message.textContent = 'Операция добавлена';
+  renderHistory();
 });
+
+renderHistory();

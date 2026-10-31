@@ -30,6 +30,7 @@ def test_page_and_api_validation():
     assert b"Finance Tracker" in page.data
     # Версии переключаются на клиенте: отдельной страницы v2 больше нет.
     assert page.data == client.get("/?v=2").data
+    assert b'id="history-body"' in page.data
     response = client.post(
         "/api/summary",
         json={"transactions": [{"type": "expenses", "amount": "-2"}]},
