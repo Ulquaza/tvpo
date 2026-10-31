@@ -17,7 +17,7 @@ def summarize(transactions):
             raise ValueError("Amount must be greater than zero")
         if kind not in totals:
             raise ValueError("Type must be income or expenses")
-        totals[kind] -= amount
+        totals[kind] += amount
     return {
         "income": totals["income"],
         "expenses": totals["expenses"],
