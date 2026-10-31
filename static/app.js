@@ -6,6 +6,7 @@ const historyBody = document.querySelector('#history-body');
 const historyEmpty = document.querySelector('#history-empty');
 
 function renderHistory() {
+  if (!historyBody) return;
   historyBody.replaceChildren();
   transactions.forEach((transaction, index) => {
     const row = document.createElement('tr');
@@ -21,7 +22,7 @@ function renderHistory() {
     }
     historyBody.append(row);
   });
-  historyEmpty.hidden = transactions.length > 0;
+  if (historyEmpty) historyEmpty.hidden = transactions.length > 0;
 }
 
 form.addEventListener('submit', async (event) => {

@@ -1,8 +1,15 @@
+import os
 from decimal import Decimal, InvalidOperation
 
 from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
+VERSIONS = {"1", "2"}
+
+
+def current_version():
+    version = os.environ.get("APP_VERSION", "2")
+    return version if version in VERSIONS else "2"
 
 
 def summarize(transactions):
@@ -27,7 +34,7 @@ def summarize(transactions):
 
 @app.get("/")
 def home():
-    return render_template("index.html")
+    return render_template(f"v{current_version()}.html")
 
 
 @app.post("/api/summary")

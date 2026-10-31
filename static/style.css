@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  background: #10211f;
-  color: #effaf2;
+  background: #f2f4f8;
+  color: #19202b;
   font: 16px system-ui;
 }
 
@@ -22,7 +22,7 @@ nav {
 }
 
 a {
-  color: #86efac;
+  color: #3267d5;
 }
 
 h1 {
@@ -37,15 +37,15 @@ h1 {
 }
 
 .cards article {
-  background: #193832;
+  background: #fff;
   border-radius: 12px;
   padding: 22px;
-  color: #b4d7c7;
+  color: #667085;
 }
 
 .cards strong {
   display: block;
-  color: #86efac;
+  color: #19202b;
   font-size: 26px;
   margin-top: 12px;
 }
@@ -59,22 +59,46 @@ input,
 select,
 button {
   padding: 12px;
-  border: 1px solid #426b5c;
+  border: 1px solid #ccd2dc;
   border-radius: 8px;
   font: inherit;
 }
 
-input,
-select {
-  background: #193832;
-  color: #fff;
-}
-
 button {
-  background: #86efac;
-  color: #10211f;
+  background: #3267d5;
+  color: #fff;
   border: 0;
   cursor: pointer;
+}
+
+.v2 {
+  background: #10211f;
+  color: #effaf2;
+}
+
+.v2 a {
+  color: #86efac;
+}
+
+.v2 .cards article {
+  background: #193832;
+  color: #b4d7c7;
+}
+
+.v2 .cards strong {
+  color: #86efac;
+}
+
+.v2 input,
+.v2 select {
+  background: #193832;
+  color: #fff;
+  border-color: #426b5c;
+}
+
+.v2 button {
+  background: #86efac;
+  color: #10211f;
 }
 
 .history {
