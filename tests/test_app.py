@@ -23,30 +23,15 @@ def test_invalid_transaction(transaction):
         summarize([transaction])
 
 
-def test_page_and_api_validation(monkeypatch):
-    monkeypatch.delenv("APP_VERSION", raising=False)
+def test_page_and_api_validation():
     client = app.test_client()
     page = client.get("/")
     assert page.status_code == 200
-    assert b"Finance Tracker" in page.data
-    assert b'id="history-body"' in page.data
+    assert b"Finance Tracker V1" in page.data
+    assert b'id="history-body"' not in page.data
     assert b"version-toggle" not in page.data
     response = client.post(
         "/api/summary",
         json={"transactions": [{"type": "expenses", "amount": "-2"}]},
     )
     assert response.status_code == 400
-
-
-def test_version_is_chosen_by_env(monkeypatch):
-    client = app.test_client()
-    monkeypatch.setenv("APP_VERSION", "1")
-    v1 = client.get("/").data
-    assert b"Finance Tracker V1" in v1
-    assert b'id="history-body"' not in v1
-    monkeypatch.setenv("APP_VERSION", "2")
-    v2 = client.get("/").data
-    assert b"Finance Tracker V2" in v2
-    assert b'id="history-body"' in v2
-    monkeypatch.setenv("APP_VERSION", "unknown")
-    assert b"Finance Tracker V2" in client.get("/").data

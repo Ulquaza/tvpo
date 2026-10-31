@@ -1,4 +1,4 @@
-name: Finance Tracker V2
+name: Finance Tracker CI/CD
 on:
   push:
     branches: [main]
@@ -29,9 +29,9 @@ jobs:
     runs-on: [self-hosted, Windows, X64]
     steps:
       - uses: actions/checkout@v4
-      - name: Build and restart container (v2)
+      - name: Build and restart container
         shell: powershell
         run: |
-          docker build -t finance-tracker:v2 .
+          docker build -t finance-tracker:latest .
           if (docker ps -a --format '{{.Names}}' | Select-String '^finance-tracker$') { docker rm -f finance-tracker }
-          docker run -d --name finance-tracker --restart unless-stopped -e APP_VERSION=2 -p 8000:8000 finance-tracker:v2
+          docker run -d --name finance-tracker --restart unless-stopped -p 8000:8000 finance-tracker:latest

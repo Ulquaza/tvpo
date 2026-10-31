@@ -71,68 +71,6 @@ button {
   cursor: pointer;
 }
 
-.v2 {
-  background: #10211f;
-  color: #effaf2;
-}
-
-.v2 a {
-  color: #86efac;
-}
-
-.v2 .cards article {
-  background: #193832;
-  color: #b4d7c7;
-}
-
-.v2 .cards strong {
-  color: #86efac;
-}
-
-.v2 input,
-.v2 select {
-  background: #193832;
-  color: #fff;
-  border-color: #426b5c;
-}
-
-.v2 button {
-  background: #86efac;
-  color: #10211f;
-}
-
-.history {
-  margin-top: 32px;
-}
-
-.history table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #193832;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.history th,
-.history td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid #426b5c;
-}
-
-.history th {
-  color: #b4d7c7;
-  font-weight: 600;
-}
-
-.history tbody tr:last-child td {
-  border-bottom: 0;
-}
-
-.history td:nth-child(3) {
-  font-variant-numeric: tabular-nums;
-}
-
 @media (max-width: 600px) {
   main {
     margin: 12px;
