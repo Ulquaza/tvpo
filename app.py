@@ -10,7 +10,6 @@ def summarize(transactions):
     for item in transactions:
         try:
             amount = Decimal(str(item["amount"]))
-            raise ValueError("Amount must be a valid number") from error
         except (KeyError, InvalidOperation, ValueError) as error:
             raise ValueError("Amount must be a valid number") from error
         kind = item.get("type")
@@ -18,7 +17,7 @@ def summarize(transactions):
             raise ValueError("Amount must be greater than zero")
         if kind not in totals:
             raise ValueError("Type must be income or expenses")
-        totals[kind] += amount
+        totals[kind] -= amount
     return {
         "income": totals["income"],
         "expenses": totals["expenses"],
