@@ -1,0 +1,6 @@
+.git
+actions-runner
+runner
+.venv
+__pycache__
+.pytest_cache

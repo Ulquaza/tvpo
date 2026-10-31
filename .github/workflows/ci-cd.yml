@@ -1,0 +1,37 @@
+name: Finance Tracker CI/CD
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    defaults:
+      run:
+        shell: powershell -ExecutionPolicy Bypass -Command "& '{0}'"
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Python
+        run: '& "D:\Programs\Python\python.exe" --version'
+      - name: Install dependencies
+        run: |
+          & "D:\Programs\Python\python.exe" -m pip install --upgrade pip
+          & "D:\Programs\Python\python.exe" -m pip install -r requirements.txt
+      - name: Ruff
+        run: '& "D:\Programs\Python\python.exe" -m ruff check .'
+      - name: Tests
+        run: '& "D:\Programs\Python\python.exe" -m pytest -q --ignore=runner-artifcts'
+
+  deploy:
+    needs: checks
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and restart container
+        shell: powershell
+        run: |
+          docker build -t finance-tracker:latest .
+          if (docker ps -a --format '{{.Names}}' | Select-String '^finance-tracker$') { docker rm -f finance-tracker }
+          docker run -d --name finance-tracker --restart unless-stopped -p 8000:8000 finance-tracker:latest
