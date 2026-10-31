@@ -1,1 +1,58 @@
-const transactions=[];const form=document.querySelector('form');form.addEventListener('submit',async event=>{event.preventDefault();transactions.push({type:document.querySelector('#type').value,amount:document.querySelector('#amount').value});const response=await fetch('/api/summary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({transactions})});const data=await response.json();if(!response.ok){document.querySelector('#message').textContent=data.error;return}for(const key of ['income','expenses','balance'])document.querySelector(`#${key}`).textContent=`₽ ${Number(data[key]).toLocaleString('ru-RU')}`;document.querySelector('#amount').value='';document.querySelector('#message').textContent='Операция добавлена'});
+const transactions = [];
+const body = document.body;
+const toggle = document.querySelector('#version-toggle');
+const form = document.querySelector('form');
+const message = document.querySelector('#message');
+const amountInput = document.querySelector('#amount');
+const tagline = document.querySelector('#tagline');
+const balanceCard = document.querySelector('#balance-card');
+const formTitle = document.querySelector('#form-title');
+
+function applyVersion(version) {
+  const isV2 = version === '2';
+  body.classList.toggle('v2', isV2);
+  toggle.textContent = isV2 ? 'Версия 1' : 'Версия 2';
+  toggle.setAttribute('aria-pressed', String(isV2));
+  tagline.textContent = isV2
+    ? 'Тёмный обзор и контроль бюджета'
+    : 'Простой обзор доходов и расходов';
+  formTitle.textContent = isV2 ? 'Быстро добавить операцию' : 'Добавить операцию';
+  balanceCard.firstChild.textContent = isV2 ? 'Свободный остаток' : 'Баланс';
+}
+
+toggle.addEventListener('click', () => {
+  const next = body.classList.contains('v2') ? '1' : '2';
+  applyVersion(next);
+  localStorage.setItem('fintrack-version', next);
+});
+
+applyVersion(localStorage.getItem('fintrack-version') === '2' ? '2' : '1');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const transaction = {
+    type: document.querySelector('#type').value,
+    amount: amountInput.value,
+  };
+  transactions.push(transaction);
+
+  const response = await fetch('/api/summary', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ transactions }),
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    transactions.pop();
+    message.textContent = data.error;
+    return;
+  }
+
+  for (const key of ['income', 'expenses', 'balance']) {
+    document.querySelector(`#${key}`).textContent =
+      `₽ ${Number(data[key]).toLocaleString('ru-RU')}`;
+  }
+  amountInput.value = '';
+  message.textContent = 'Операция добавлена';
+});

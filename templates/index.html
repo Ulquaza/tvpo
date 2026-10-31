@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Finance Tracker</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <nav>
+      <b>FinTrack</b>
+      <button id="version-toggle" type="button" aria-pressed="false">Версия 2</button>
+    </nav>
+    <h1>Мои финансы</h1>
+    <p id="tagline">Простой обзор доходов и расходов</p>
+    <section class="cards">
+      <article>Доходы<strong id="income">₽ 0</strong></article>
+      <article>Расходы<strong id="expenses">₽ 0</strong></article>
+      <article id="balance-card">Баланс<strong id="balance">₽ 0</strong></article>
+    </section>
+    <h2 id="form-title">Добавить операцию</h2>
+    <form>
+      <select id="type">
+        <option value="income">Доход</option>
+        <option value="expenses">Расход</option>
+      </select>
+      <input id="amount" type="number" min="0.01" step="0.01" placeholder="Сумма" required>
+      <button>Добавить</button>
+    </form>
+    <p id="message"></p>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

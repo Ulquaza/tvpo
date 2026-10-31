@@ -23,10 +23,13 @@ def test_invalid_transaction(transaction):
         summarize([transaction])
 
 
-def test_pages_and_api_validation():
+def test_page_and_api_validation():
     client = app.test_client()
-    assert b"Finance Tracker V1" in client.get("/").data
-    assert b"Finance Tracker V2" in client.get("/?v=2").data
+    page = client.get("/")
+    assert page.status_code == 200
+    assert b"Finance Tracker" in page.data
+    # Версии переключаются на клиенте: отдельной страницы v2 больше нет.
+    assert page.data == client.get("/?v=2").data
     response = client.post(
         "/api/summary",
         json={"transactions": [{"type": "expenses", "amount": "-2"}]},

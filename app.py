@@ -27,8 +27,7 @@ def summarize(transactions):
 
 @app.get("/")
 def home():
-    version = request.args.get("v", "1")
-    return render_template(f"v{version if version in {'1', '2'} else '1'}.html")
+    return render_template("index.html")
 
 
 @app.post("/api/summary")
