@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  background: #f2f4f8;
-  color: #19202b;
+  background: #10211f;
+  color: #effaf2;
   font: 16px system-ui;
 }
 
@@ -22,22 +22,7 @@ nav {
 }
 
 a {
-  color: #3267d5;
-}
-
-#version-toggle {
-  padding: 8px 14px;
-  background: transparent;
-  color: #3267d5;
-  border: 1px solid #3267d5;
-  border-radius: 8px;
-  font: inherit;
-  cursor: pointer;
-}
-
-#version-toggle:hover {
-  background: #3267d5;
-  color: #fff;
+  color: #86efac;
 }
 
 h1 {
@@ -52,15 +37,15 @@ h1 {
 }
 
 .cards article {
-  background: white;
+  background: #193832;
   border-radius: 12px;
   padding: 22px;
-  color: #667085;
+  color: #b4d7c7;
 }
 
 .cards strong {
   display: block;
-  color: #19202b;
+  color: #86efac;
   font-size: 26px;
   margin-top: 12px;
 }
@@ -74,57 +59,26 @@ input,
 select,
 button {
   padding: 12px;
-  border: 1px solid #ccd2dc;
+  border: 1px solid #426b5c;
   border-radius: 8px;
   font: inherit;
 }
 
+input,
+select {
+  background: #193832;
+  color: #fff;
+}
+
 button {
-  background: #3267d5;
-  color: white;
+  background: #86efac;
+  color: #10211f;
   border: 0;
   cursor: pointer;
 }
 
-.v2 {
-  background: #10211f;
-  color: #effaf2;
-}
-
-.v2 a,
-.v2 #version-toggle {
-  color: #86efac;
-  border-color: #86efac;
-}
-
-.v2 #version-toggle:hover {
-  background: #86efac;
-  color: #10211f;
-}
-
-.v2 .cards article {
-  background: #193832;
-  color: #b4d7c7;
-}
-
-.v2 .cards strong {
-  color: #86efac;
-}
-
-.v2 input,
-.v2 select {
-  background: #193832;
-  color: white;
-  border-color: #426b5c;
-}
-
 .history {
-  display: none;
   margin-top: 32px;
-}
-
-.v2 .history {
-  display: block;
 }
 
 .history table {

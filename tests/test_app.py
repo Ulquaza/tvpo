@@ -28,9 +28,9 @@ def test_page_and_api_validation():
     page = client.get("/")
     assert page.status_code == 200
     assert b"Finance Tracker" in page.data
-    # Версии переключаются на клиенте: отдельной страницы v2 больше нет.
     assert page.data == client.get("/?v=2").data
     assert b'id="history-body"' in page.data
+    assert b"version-toggle" not in page.data
     response = client.post(
         "/api/summary",
         json={"transactions": [{"type": "expenses", "amount": "-2"}]},
