@@ -27,8 +27,8 @@ def test_page_and_api_validation():
     client = app.test_client()
     page = client.get("/")
     assert page.status_code == 200
-    assert b"Finance Tracker V1" in page.data
-    assert b'id="history-body"' not in page.data
+    assert b"Finance Tracker V2" in page.data
+    assert b'id="history-body"' in page.data
     assert b"version-toggle" not in page.data
     response = client.post(
         "/api/summary",

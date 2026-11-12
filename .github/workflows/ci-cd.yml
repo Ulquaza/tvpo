@@ -29,9 +29,32 @@ jobs:
     runs-on: [self-hosted, Windows, X64]
     steps:
       - uses: actions/checkout@v4
-      - name: Build and restart container
+      - name: Check Docker daemon
+        shell: powershell
+        run: |
+          docker version
+          if ($LASTEXITCODE -ne 0) {
+            throw 'Docker is unavailable to the runner. Start Docker Desktop and enable the Linux engine.'
+          }
+
+      - name: Build Docker image
         shell: powershell
         run: |
           docker build -t finance-tracker:latest .
-          if (docker ps -a --format '{{.Names}}' | Select-String '^finance-tracker$') { docker rm -f finance-tracker }
+          if ($LASTEXITCODE -ne 0) { throw 'docker build failed.' }
+
+      - name: Remove previous container
+        shell: powershell
+        run: |
+          $existingContainer = docker ps -a --format '{{.Names}}'
+          if ($LASTEXITCODE -ne 0) { throw 'docker ps failed.' }
+          if ($existingContainer -contains 'finance-tracker') {
+            docker rm -f finance-tracker
+            if ($LASTEXITCODE -ne 0) { throw 'Removing the previous container failed.' }
+          }
+
+      - name: Start container
+        shell: powershell
+        run: |
           docker run -d --name finance-tracker --restart unless-stopped -p 8000:8000 finance-tracker:latest
+          if ($LASTEXITCODE -ne 0) { throw 'Starting the new container failed.' }
